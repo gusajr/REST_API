@@ -9,7 +9,10 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.api.microservicio.model.Cita;
 import com.api.microservicio.model.Cliente;
+import com.api.microservicio.model.Especialidad;
+import com.api.microservicio.model.Medico;
 
 @Repository
 @Transactional
@@ -30,4 +33,20 @@ public class MicroservicioDao{
         String sql="select * from cliente";      
         return template.query(sql, new BeanPropertyRowMapper<Cliente>(Cliente.class));       
     }    
+
+    public List<Cita> obtenerCitas(){
+        String sql="select * from cita";      
+        return template.query(sql, new BeanPropertyRowMapper<Cita>(Cita.class));       
+    }   
+
+    public List<Especialidad> obtenerEspecialidades(){
+        String sql="select * from especialidad";      
+        return template.query(sql, new BeanPropertyRowMapper<Especialidad>(Especialidad.class));       
+    }
+
+    public List<Medico> obtenerMedicos(){
+        String sql="select * from medico";      
+        return template.query(sql, new BeanPropertyRowMapper<Medico>(Medico.class));       
+    }
+
 }
