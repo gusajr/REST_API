@@ -8,6 +8,6 @@ public class Cita {
     String idCliente;
     String idEspecialidad;
     String fechaHoraCita;
-    boolean activa;
+    String activa;
     String motivo;
 }

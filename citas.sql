@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-10-2022 a las 02:06:23
+-- Tiempo de generación: 28-10-2022 a las 02:00:41
 -- Versión del servidor: 10.4.25-MariaDB
 -- Versión de PHP: 8.1.10
 
@@ -43,7 +43,8 @@ CREATE TABLE `cita` (
 INSERT INTO `cita` (`idCita`, `idCliente`, `idEspecialidad`, `fechaHoraCita`, `activa`, `motivo`) VALUES
 (1, 1, 1, '2022-10-20 18:10:28', '1', 'dolor de estomago'),
 (2, 2, 1, '2022-10-26 01:11:46', '1', 'dolor de estomago'),
-(3, 2, 1, '2022-10-26 01:11:46', '1', 'dolor de estomago');
+(3, 2, 1, '2022-10-26 01:11:46', '1', 'dolor de estomago'),
+(4, 1, 1, '2022-10-26 01:11:46', '1', 'mareos');
 
 -- --------------------------------------------------------
 
@@ -65,7 +66,8 @@ CREATE TABLE `cliente` (
 
 INSERT INTO `cliente` (`idCliente`, `nombres`, `apellidos`, `correo`, `curp`) VALUES
 (1, 'Gustavo Alfredo', 'Jimenez Ruiz', 'jimenezruizga@gmail.com', 'AAAA000000AAAAAA00'),
-(2, 'Eduardo', 'Torres', 'Islas', 'BBBB000000BBBBBB00');
+(2, 'Eduardo', 'Torres', 'Islas', 'BBBB000000BBBBBB00'),
+(4, 'Mario Iván', 'Gutierrez Andrade', 'correo@gmail.com', 'CCCC000000CCCCCC00');
 
 -- --------------------------------------------------------
 
@@ -119,7 +121,8 @@ ALTER TABLE `cita`
 -- Indices de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  ADD PRIMARY KEY (`idCliente`);
+  ADD PRIMARY KEY (`idCliente`),
+  ADD UNIQUE KEY `CURP` (`curp`) USING BTREE;
 
 --
 -- Indices de la tabla `especialidad`
@@ -141,13 +144,13 @@ ALTER TABLE `medico`
 -- AUTO_INCREMENT de la tabla `cita`
 --
 ALTER TABLE `cita`
-  MODIFY `idCita` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idCita` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `especialidad`
