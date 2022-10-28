@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.api.microservicio.model.Busqueda;
 import com.api.microservicio.model.Cita;
 import com.api.microservicio.model.Cliente;
 import com.api.microservicio.model.Especialidad;
@@ -73,15 +74,15 @@ public class MicroservicioDao{
         return template.query(sql, new BeanPropertyRowMapper<Cita>(Cita.class));       
     }   
 
-    public List<Cliente> obtenerCitaPorDia(String id){
-        String sql="select * from cliente where idCliente="+id;      
-        return template.query(sql, new BeanPropertyRowMapper<Cliente>(Cliente.class));       
-    }   
-
-    public List<Cliente> obtenerCitaPorCurp(String id){
-        String sql="select * from cliente where idCliente="+id;      
-        return template.query(sql, new BeanPropertyRowMapper<Cliente>(Cliente.class));       
-    }   
+    public List<Cita> obtenerCitas(Busqueda busqueda){
+        String sql = "";
+        if(busqueda.getFechaHoraCita()!=null){
+            sql="select * from cita where fechaHoraCita>"+busqueda.getFechaHoraCita();
+        }else{
+            sql="select * from cita as ca inner join cliente as ce on ca.idCliente = ce.idCliente where ce.curp = '"+busqueda.getCurp()+"'";
+        }
+        return template.query(sql, new BeanPropertyRowMapper<Cita>(Cita.class));        
+    } 
 
     public int crearCita(Cita cita){
         try{
@@ -99,6 +100,16 @@ public class MicroservicioDao{
             Object[] citaObj = new Object[] { cita.getIdCliente(), cita.getIdEspecialidad(),
                 cita.getFechaHoraCita(), cita.getActiva(), cita.getMotivo(), cita.getIdCita() };
             String sql="update cita set idCliente=?,idEspecialidad=?,fechaHoraCita=?,activa=?,motivo=? where idCita=?";      
+            return template.update(sql,citaObj);
+        }catch(Exception e){
+            return 0;
+        }
+    }
+
+    public int eliminarCita(Cita cita){
+        try{
+            Object[] citaObj = new Object[] { cita.getIdCita() };
+            String sql="delete from cita where idCita=?";      
             return template.update(sql,citaObj);
         }catch(Exception e){
             return 0;

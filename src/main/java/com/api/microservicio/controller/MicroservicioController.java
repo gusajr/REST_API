@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,16 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.api.microservicio.dao.MicroservicioDao;
 import com.api.microservicio.model.Cliente;
 import com.api.microservicio.model.All;
+import com.api.microservicio.model.Busqueda;
 import com.api.microservicio.model.Cita;
-import com.api.microservicio.model.Especialidad;
-import com.api.microservicio.model.Medico;
 import com.api.microservicio.model.Respuesta;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 public class MicroservicioController {
@@ -86,7 +80,7 @@ public class MicroservicioController {
 	/* CITA */
 
 	@GetMapping("/citas")
-	ResponseEntity<Object> mostrarCitas(){
+	ResponseEntity<Object> obtenerCitas(){
 		return new ResponseEntity<Object>(dao.obtenerCitas(), HttpStatus.OK);
 	}
 
@@ -100,6 +94,39 @@ public class MicroservicioController {
 		}else{
 			respuesta.setCodigo(500);
 			respuesta.setMensaje("No se pudo insertar el nuevo cliente");
+			return new ResponseEntity<Object>(respuesta, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@PostMapping("/busqueda")
+	ResponseEntity<Object> obtenerCitaPorCurp(@RequestBody Busqueda busqueda){
+		return new ResponseEntity<Object>(dao.obtenerCitas(busqueda), HttpStatus.OK);
+	}
+
+	@PutMapping("/cita")
+	ResponseEntity<Object> actualizarCita(@RequestBody Cita cita){
+		Respuesta respuesta = new Respuesta();
+		if(dao.actualizarCita(cita)==1){
+			respuesta.setCodigo(200);
+			respuesta.setMensaje("Ejecutado correctamente");
+			return new ResponseEntity<Object>(respuesta, HttpStatus.OK);
+		}else{
+			respuesta.setCodigo(500);
+			respuesta.setMensaje("No se pudo actualizar la información de la cita");
+			return new ResponseEntity<Object>(respuesta, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@DeleteMapping("/cita")
+	ResponseEntity<Object> eliminarCita(@RequestBody Cita cita){
+		Respuesta respuesta = new Respuesta();
+		if(dao.eliminarCita(cita)==1){
+			respuesta.setCodigo(200);
+			respuesta.setMensaje("Ejecutado correctamente");
+			return new ResponseEntity<Object>(respuesta, HttpStatus.OK);
+		}else{
+			respuesta.setCodigo(500);
+			respuesta.setMensaje("No se pudo eliminar la cita");
 			return new ResponseEntity<Object>(respuesta, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

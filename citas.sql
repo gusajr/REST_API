@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-10-2022 a las 02:00:41
+-- Tiempo de generación: 28-10-2022 a las 17:24:24
 -- Versión del servidor: 10.4.25-MariaDB
 -- Versión de PHP: 8.1.10
 
@@ -43,8 +43,7 @@ CREATE TABLE `cita` (
 INSERT INTO `cita` (`idCita`, `idCliente`, `idEspecialidad`, `fechaHoraCita`, `activa`, `motivo`) VALUES
 (1, 1, 1, '2022-10-20 18:10:28', '1', 'dolor de estomago'),
 (2, 2, 1, '2022-10-26 01:11:46', '1', 'dolor de estomago'),
-(3, 2, 1, '2022-10-26 01:11:46', '1', 'dolor de estomago'),
-(4, 1, 1, '2022-10-26 01:11:46', '1', 'mareos');
+(3, 2, 1, '2022-10-26 01:11:46', '1', 'dolor de estomago');
 
 -- --------------------------------------------------------
 
